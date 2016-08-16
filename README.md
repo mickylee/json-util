@@ -11,7 +11,6 @@ some ways to use json
 	
 ###	jackson
 
-	Json已经成为当前服务器与 WEB 应用之间数据传输的公认标准。
 	相比于其他的解析工具，Jackson 简单易用，不依赖于外部jar 包，而且更新速度比较快。
 	其也是 SpringMVC 框架 json 格式化输出的默认实现。
 	
