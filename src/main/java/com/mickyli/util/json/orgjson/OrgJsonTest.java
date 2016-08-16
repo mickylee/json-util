@@ -5,12 +5,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 import org.json.JSONTokener;
+
+import com.mickyli.util.json.Student;
 
 public class OrgJsonTest {
 	
@@ -22,7 +29,7 @@ public class OrgJsonTest {
 	 *  值可以是任何这些类型：Boolean,JSONArray,JSONObject,Number和String，或者JOSONObject.NULL对象
 	 * @return
 	 */
-	public static String prepareJSONObject(){  
+	public static String buildJSONObject(){  
         JSONObject studentJSONObject = new JSONObject();  
         try {  
             studentJSONObject.put("name", "Jason");  
@@ -79,7 +86,7 @@ public class OrgJsonTest {
 		}
 	}
 	
-	public static String prepareJSONObjectAndArray(){  
+	public static String buildJSONObjectAndArray(){  
         JSONObject studentJSONObject = new JSONObject(); 
         JSONObject book1 = new JSONObject();
         JSONObject book2 = new JSONObject();
@@ -114,7 +121,7 @@ public class OrgJsonTest {
 	 * key():表示添加一个key；value():表示添加一个value 
 	 * @return
 	 */
-    public static String prepareJSONStringer(){  
+    public static String buildJSONStringer(){  
         JSONStringer jsonStringer = new JSONStringer();
         try {  
             jsonStringer.object();  
@@ -147,7 +154,7 @@ public class OrgJsonTest {
         return jsonStringer.toString();  
     }  
 	
-    public static String prepareMultiJSONStringer(){ 
+    public static String buildMultiJSONStringer(){ 
 		JSONStringer jsonStringer = new JSONStringer();
 		JSONObject obj6 = new JSONObject();
 		obj6.put("title", "book1").put("price", "$11");
@@ -184,7 +191,7 @@ public class OrgJsonTest {
      * JSONTokener 
      *  解析JSON源字符串 
      */
-    public static void JSONTokenerTest1() { 
+    public static void JSONTokenerTest() { 
 		try {
 			JSONObject jsonobj = new JSONObject(new JSONTokener(new FileReader(new File("data/1.txt"))));
 			System.out.println(jsonobj.getJSONObject("session").getJSONArray("signing").getJSONObject(1).getJSONObject("book").getString("title")); 
@@ -194,10 +201,95 @@ public class OrgJsonTest {
         
     }
     
+    /**
+     * 构造Json数据
+     * 
+     * @return
+     * @throws JSONException
+     */
+    public static String buildJson() throws JSONException {
+
+        // JSON格式数据解析对象
+        JSONObject jo = new JSONObject();
+
+        // 下面构造两个map、一个list和一个Student对象
+        Map<String, String> map1 = new HashMap<String, String>();
+        map1.put("name", "Alexia");
+        map1.put("sex", "female");
+        map1.put("age", "23");
+
+        Map<String, String> map2 = new HashMap<String, String>();
+        map2.put("name", "Edward");
+        map2.put("sex", "male");
+        map2.put("age", "24");
+
+        List<Map> list = new ArrayList<Map>();
+        list.add(map1);
+        list.add(map2);
+        
+        Student student = new Student();
+        student.setId(1);
+        student.setName("jack");
+        student.setPhone("1388888888");
+        student.setStatus(true);
+
+        // 将Map转换为JSONArray数据
+        JSONArray ja = new JSONArray();
+        ja.put(map1);
+
+        System.out.println("JSONArray对象数据格式：");
+        System.out.println(ja.toString());
+
+        // 将Javabean转换为Json数据（需要Map中转）
+        JSONObject jo1 = JsonHelper.toJSON(student);
+
+        System.out.println("\n仅含Student对象的Json数据格式：");
+        System.out.println(jo1.toString());
+
+        // 构造Json数据，包括一个map和一个含Employee对象的Json数据
+        jo.put("map", ja);
+        jo.put("student", jo1.toString());
+        System.out.println("\n最终构造的JSON数据格式：");
+        System.out.println(jo.toString());
+
+        return jo.toString();
+
+    }
+
+    /**
+     * 解析Json数据
+     * 
+     * @param jsonString
+     *            Json数据字符串
+     * @throws JSONException
+     * @throws ParseException
+     */
+    public static void parseJson(String jsonString) throws JSONException,
+            ParseException {
+
+        JSONObject jo = new JSONObject(jsonString);
+        JSONArray ja = jo.getJSONArray("map");
+
+        System.out.println("\n将Json数据解析为Map：");
+        System.out.println("name: " + ja.getJSONObject(0).getString("name")
+                + " sex: " + ja.getJSONObject(0).getString("sex") + " age: "
+                + ja.getJSONObject(0).getInt("age"));
+
+        String jsonStr = jo.getString("student");
+        Student stu = new Student();
+        JsonHelper.toJavaBean(stu, jsonStr);
+
+        System.out.println("\n将Json数据解析为Student对象：");
+        System.out.println("name: " + stu.getName() + " sex: " + stu.getSex()
+                + " age: " + stu.getAge());
+
+    }
+    
+    
 	public static void main(String[] args) {
 		
-		System.out.println(prepareJSONObject());  
-        System.out.println(prepareJSONStringer());
+		System.out.println(buildJSONObject());  
+        System.out.println(buildJSONStringer());
         
         parseJSONObject();
         
@@ -205,10 +297,12 @@ public class OrgJsonTest {
         
         parseJSONObjectAndArray();
         
-        System.out.println(prepareJSONObjectAndArray());
-        System.out.println(prepareMultiJSONStringer());
+        System.out.println(buildJSONObjectAndArray());
+        System.out.println(buildJSONStringer());
         
-        JSONTokenerTest1();
+        JSONTokenerTest();
+        
+        buildJson();
 	}
 
 }

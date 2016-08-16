@@ -6,7 +6,8 @@ public class Student {
 	private String name;
 	private String phone;
 	private boolean status;
-	
+	private int age;
+	private String sex;
 	public Student() {
 		super();
 	}
@@ -34,11 +35,22 @@ public class Student {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", phone=" + phone
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", age=" + age + ", sex=" + sex + "]";
 	}
-	
 	
 }
