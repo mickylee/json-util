@@ -2,7 +2,7 @@
 some ways to use json
 
 
-分别使用json-lib,org.json,fastjson,gson,jackson,jsonpath构造和解析json
+	分别使用	json-lib, org.json, fastjson, gson, jackson, jsonpath 构造和解析json
 
 ###	org.json
 

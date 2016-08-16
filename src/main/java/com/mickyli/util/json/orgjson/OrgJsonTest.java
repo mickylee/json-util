@@ -29,7 +29,7 @@ public class OrgJsonTest {
 	 *  值可以是任何这些类型：Boolean,JSONArray,JSONObject,Number和String，或者JOSONObject.NULL对象
 	 * @return
 	 */
-	public static String buildJSONObject(){  
+	public static void buildJSONObject(){  
         JSONObject studentJSONObject = new JSONObject();  
         try {  
             studentJSONObject.put("name", "Jason");  
@@ -38,8 +38,7 @@ public class OrgJsonTest {
         } catch (JSONException e) {  
             e.printStackTrace();  
         }  
-          
-        return studentJSONObject.toString();  
+        System.out.println(studentJSONObject.toString());
     }  
 	
 	/**
@@ -121,7 +120,7 @@ public class OrgJsonTest {
 	 * key():表示添加一个key；value():表示添加一个value 
 	 * @return
 	 */
-    public static String buildJSONStringer(){  
+    public static void buildJSONStringer(){  
         JSONStringer jsonStringer = new JSONStringer();
         try {  
             jsonStringer.object();  
@@ -151,10 +150,10 @@ public class OrgJsonTest {
         } catch (JSONException e) {  
             e.printStackTrace();  
         }  
-        return jsonStringer.toString();  
+        System.out.println(jsonStringer.toString());
     }  
 	
-    public static String buildMultiJSONStringer(){ 
+    public static void buildMultiJSONStringer(){ 
 		JSONStringer jsonStringer = new JSONStringer();
 		JSONObject obj6 = new JSONObject();
 		obj6.put("title", "book1").put("price", "$11");
@@ -184,14 +183,13 @@ public class OrgJsonTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} 
-		
-		return jsonStringer.toString();
+		System.out.println(jsonStringer.toString());
 	}
     /**
      * JSONTokener 
      *  解析JSON源字符串 
      */
-    public static void JSONTokenerTest() { 
+    public static void JSONTokener() { 
 		try {
 			JSONObject jsonobj = new JSONObject(new JSONTokener(new FileReader(new File("data/1.txt"))));
 			System.out.println(jsonobj.getJSONObject("session").getJSONArray("signing").getJSONObject(1).getJSONObject("book").getString("title")); 
@@ -207,7 +205,7 @@ public class OrgJsonTest {
      * @return
      * @throws JSONException
      */
-    public static String buildJson() throws JSONException {
+    public static void buildJson(){
 
         // JSON格式数据解析对象
         JSONObject jo = new JSONObject();
@@ -251,9 +249,6 @@ public class OrgJsonTest {
         jo.put("student", jo1.toString());
         System.out.println("\n最终构造的JSON数据格式：");
         System.out.println(jo.toString());
-
-        return jo.toString();
-
     }
 
     /**
@@ -285,24 +280,4 @@ public class OrgJsonTest {
 
     }
     
-    
-	public static void main(String[] args) {
-		
-		System.out.println(buildJSONObject());  
-        System.out.println(buildJSONStringer());
-        
-        parseJSONObject();
-        
-        parseJSONArray();
-        
-        parseJSONObjectAndArray();
-        
-        System.out.println(buildJSONObjectAndArray());
-        System.out.println(buildJSONStringer());
-        
-        JSONTokenerTest();
-        
-        buildJson();
-	}
-
 }
