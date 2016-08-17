@@ -1,5 +1,7 @@
 package com.mickyli.util.json;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,13 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class Store {
 
-	private int id;
-	private String name;
-	private String phone;
-	private boolean status;
-	private int age;
-	private String sex;
-
+	private Bicycle bicycle;
+	private List<Book> books;
 }

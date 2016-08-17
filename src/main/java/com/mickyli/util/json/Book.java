@@ -7,13 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
-
-	private int id;
-	private String name;
-	private String phone;
-	private boolean status;
-	private int age;
-	private String sex;
-
+public class Book {
+	private String category;
+	private String author;
+	private String title;
+	private String isbn;
+	private double price;
 }
